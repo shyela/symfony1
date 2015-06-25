@@ -362,9 +362,10 @@ class sfForm implements ArrayAccess, Iterator, Countable
       throw new LogicException('A bound form cannot be embedded');
     }
 
+    // Shy Aberman: Move the clone before setting into embeddedForms to fix problem persisting EventSlots
+    $form = clone $form;
     $this->embeddedForms[$name] = $form;
 
-    $form = clone $form;
     unset($form[self::$CSRFFieldName]);
 
     $widgetSchema = $form->getWidgetSchema();
